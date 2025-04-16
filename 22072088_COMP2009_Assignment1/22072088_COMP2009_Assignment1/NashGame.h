@@ -44,10 +44,12 @@ void NashGame::play() {
 		if (!board->addMove(playerType, x, y))
 			return;
 
-		board->printVectorCells(board->depthFirstSearch(x, y));
+		//board->printVectorCells(board->depthFirstSearch(x, y));	//TESTING FOR DFS PATH CHECK
 
 		board->printBoard();
-		won = board->checkWinningStatus();
+
+		vector<Cell> currentPath = board->depthFirstSearch(x, y);
+		won = board->checkWinningStatus(currentPath, playerType);
 		if (won == playerType)
 			cout << player[playerIndex]->getPlayerName() << " player wins!" << endl;
 		else if (won == 999)

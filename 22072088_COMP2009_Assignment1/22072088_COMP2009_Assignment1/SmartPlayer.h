@@ -31,24 +31,19 @@ void printPriorityQueue(priority_queue<Cell> moves) {
 	}
 }
 
-
 bool SmartPlayer::getMove(Board* board, int& x, int& y) {
+
 	priority_queue <Cell> moves;
-
 	vector <Cell> emptyCells = board->getEmptyCells();
-
 	random_shuffle(emptyCells.begin(), emptyCells.end());
-
-																					//board->printVectorCells(emptyCells);
 
 	if (emptyCells.empty())
 		return false;
 
-	steps = 1000;
+	steps = 10000;
 
 	for (Cell cell : emptyCells)
 	{
-																					//cout << "Accessing empty cell " << cell.x << ", " << cell.y << endl;
 		int i = cell.x;
 		int j = cell.y;
 
@@ -64,10 +59,7 @@ bool SmartPlayer::getMove(Board* board, int& x, int& y) {
 		}
 
 		double minUtility = minMove(tempboard);
-
-																					//cout << "about to push " << i << ", " << j << endl;
 		Cell c(i, j, minUtility);
-
 		moves.push(c);
 	}
 
@@ -81,8 +73,6 @@ bool SmartPlayer::getMove(Board* board, int& x, int& y) {
 		cout << moves.size() << " MiniMax Utility = " << moves.top().heuristic
 			<< " at (" << (x + 1) << "," << (y + 1) << ")" << endl;
 	}
-	
-
 	return true;
 }
 
@@ -95,7 +85,7 @@ double SmartPlayer::minMove(Board board)
 	random_shuffle(emptyCells.begin(), emptyCells.end());
 
 	double minUtility = 2;
-	
+
 	for (Cell cell : emptyCells)
 	{
 		int i = cell.x;
@@ -121,9 +111,6 @@ double SmartPlayer::minMove(Board board)
 		if (utility < minUtility)
 			minUtility = utility;
 	}
-
-	//cout << "depth rn: " << steps << endl;
-
 
 	steps--;
 	return minUtility;
@@ -157,17 +144,11 @@ double SmartPlayer::maxMove(Board board)
 		}
 
 		double utility;
-
-			utility= minMove(tempboard);
-		
-
-
+		utility= minMove(tempboard);
+	
 		if (utility > maxUtility)
 			maxUtility = utility;
 	}
-
-	//cout << "depth rn: " << steps << endl;
-
 
 	steps--;
 	return maxUtility;

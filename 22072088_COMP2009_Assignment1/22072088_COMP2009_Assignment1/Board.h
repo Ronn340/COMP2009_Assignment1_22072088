@@ -7,7 +7,7 @@
 
 #ifndef BOARD_H_
 #define BOARD_H_
-
+//testing
 #include <vector>
 #include <stack>
 
@@ -78,16 +78,16 @@ public:
 	}
 
 	int findVectorIndex(Cell target, vector<Cell> vector);
-
+	
 	void printVectorCells(vector<Cell> cells);
+
+	void printStackCells(stack<Cell> cells);
 
 	stack<Cell> getPerpendicularNeighbors(int playerType, int x, int y);
 
 	stack<Cell> getNeighbors(int playerType, int x, int y);
 
 	vector<Cell> depthFirstSearch(int x, int y);
-
-	vector<Cell> depthFirstSearchPlayerBased(int x, int y); //random stuff testing
 
 
 	bool cellAt(vector<Cell> vector, Cell c);
@@ -101,6 +101,8 @@ public:
 	int checkWinningStatus(vector<Cell> path, int playerType) {
 		if (endPointsFound(path, playerType))
 			return playerType;
+		else if (emptyCells.empty())
+			return 999;
 		else
 			return 0;
 	}
@@ -221,6 +223,18 @@ void Board::printVectorCells(vector<Cell> cells)
 	cout << endl;
 }
 
+void Board::printStackCells(stack<Cell> cells)
+{
+	int i = 1;
+
+	while (!cells.empty())
+	{
+		cout << i++ <<". (" << cells.top().x + 1<< ", " << cells.top().y + 1<< ")" << endl;
+		cells.pop();
+	}
+}
+
+
 int Board::findVectorIndex(Cell target, vector<Cell> vector)
 {
 	int index = -1;
@@ -236,23 +250,25 @@ int Board::findVectorIndex(Cell target, vector<Cell> vector)
 int Board::checkWinningStatus()
 {
 	//black
-	
-	for (int x = 0, y = 0; y < boardSize; y++)
-	{
+		for (int x = 0, y = 0; y < boardSize; y++)
+		{
 
-		if(getGrid(x, y) == 1 && endPointsFound(depthFirstSearch(x, y), 1))
-			return 1;
-	}
-
-	for (int x = 0, y = 0; x < boardSize; x++)
-	{
-		if (getGrid(x, y) == -1 && endPointsFound(depthFirstSearch(x, y), -1))
-			return -1;
-	}
-
-	return 0;
+			if(getGrid(x, y) == 1 && endPointsFound(depthFirstSearch(x, y), 1))
+				return 1;
+		}
 
 	//white
+
+		for (int x = 0, y = 0; x < boardSize; x++)
+		{
+			if (getGrid(x, y) == -1 && endPointsFound(depthFirstSearch(x, y), -1))
+				return -1;
+		}
+	
+		if (emptyCells.empty())
+			return 999;
+
+		return 0;
 }
 
 
@@ -271,7 +287,7 @@ bool Board::endPointsFound(vector<Cell> path, int playerType)
 				endPoint = true;
 		}
 	}
-	else //playerType == -1 white
+	else 
 	{
 		for (int i = 0; i < path.size(); i++)
 		{
@@ -327,13 +343,6 @@ stack<Cell> Board::getPerpendicularNeighbors(int playerType, int x, int y)
 		if (y + 1 < boardSize && grid[x][y + 1] == playerType)
 			neighbors.push({ x, y + 1 });
 
-		if (x - 1 >= 0 && y + 1 < boardSize && grid[x - 1][y + 1] == playerType)		//top right
-			neighbors.push({ x - 1, y + 1 });
-
-		if (x + 1 < boardSize && y - 1 >= 0 && grid[x + 1][y - 1] == playerType)	//bottome left
-			neighbors.push({ x + 1, y - 1 });
-
-
 	}
 	else							//Black or player 1
 	{
@@ -343,17 +352,12 @@ stack<Cell> Board::getPerpendicularNeighbors(int playerType, int x, int y)
 		if (x + 1 < boardSize && grid[x + 1][y] == playerType)
 			neighbors.push({ x + 1, y });
 
-		if (x - 1 >= 0 && y + 1 < boardSize && grid[x - 1][y + 1] == playerType)		//top right
-			neighbors.push({ x - 1, y + 1 });
-
-		if (x + 1 < boardSize && y - 1 >= 0 && grid[x + 1][y - 1] == playerType)	//bottome left
-			neighbors.push({ x + 1, y - 1 });
 	}
 	return neighbors;
 
 }
 
-vector<Cell> Board::depthFirstSearch(int x, int y) //after this fix the vectorCell find return instance
+vector<Cell> Board::depthFirstSearch(int x, int y) 
 {
 	vector<Cell> visited;
 	stack<Cell> toBeVisited;
@@ -382,34 +386,6 @@ vector<Cell> Board::depthFirstSearch(int x, int y) //after this fix the vectorCe
 	return visited;
 }
 
-vector<Cell> Board::depthFirstSearchPlayerBased(int x, int y) //random stuff testing
-{
-	vector<Cell> visited;
-	stack<Cell> toBeVisited;
-
-	toBeVisited.push({ x, y });
-
-	while (!toBeVisited.empty())
-	{
-		Cell currentCell = toBeVisited.top();
-		toBeVisited.pop();
-
-		if (!cellAt(visited, currentCell))
-			visited.push_back(currentCell);
-
-		stack<Cell> neighborsOfCurrent = getPerpendicularNeighbors(grid[x][y], currentCell.x, currentCell.y);
-		// ==== CHANGE HERE FOR TASK 3 AND 5 ====
-
-		while (!neighborsOfCurrent.empty())
-		{
-			if (!cellAt(visited, neighborsOfCurrent.top()))
-				toBeVisited.push(neighborsOfCurrent.top());
-
-			neighborsOfCurrent.pop();
-		}
-	}
-	return visited;
-}
 bool Board::cellAt(vector<Cell> vector, Cell target)
 {
 	for (int i = 0; i < vector.size(); i++)

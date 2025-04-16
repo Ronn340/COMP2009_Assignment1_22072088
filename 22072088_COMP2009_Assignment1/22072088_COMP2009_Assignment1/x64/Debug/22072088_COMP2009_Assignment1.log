@@ -1,3 +1,3 @@
 ﻿  Main.cpp
-C:\Dev\CPP\22072088_COMP2009_Assignment1\22072088_COMP2009_Assignment1\Main.cpp(22,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  22072088_COMP2009_Assignment1.vcxproj -> C:\Dev\CPP\22072088_COMP2009_Assignment1\x64\Debug\22072088_COMP2009_Assignment1.exe
+C:\Dev\CPP\COMP2009_Assignment1_22072088\22072088_COMP2009_Assignment1\22072088_COMP2009_Assignment1\Main.cpp(22,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  22072088_COMP2009_Assignment1.vcxproj -> C:\Dev\CPP\COMP2009_Assignment1_22072088\22072088_COMP2009_Assignment1\x64\Debug\22072088_COMP2009_Assignment1.exe

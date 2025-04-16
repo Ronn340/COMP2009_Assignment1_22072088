@@ -66,7 +66,6 @@ double MonteCarloPlayer::simulation(Board board)
 double MonteCarloPlayer::expansion(Board board, int player)
 {
 	int gameWinner = board.checkWinningStatus();
-
 	if (gameWinner == type)
 		return 1.0;
 

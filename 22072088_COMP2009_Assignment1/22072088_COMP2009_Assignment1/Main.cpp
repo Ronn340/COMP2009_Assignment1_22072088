@@ -29,8 +29,19 @@ int main() {
 
 	Board* board = new Board(boardSize);
 
-	Player* p1 = new SmartPlayer(1, "MINIMAXPLAYER(SMART) (Black)");
-	Player* p2 = new MonteCarloPlayer(-1, "MONTECARLO (White)");
+	//Player* p1 = new HumanPlayer(1, "HUMAN_1 (Black)");
+	//Player* p1 = new RandomPlayer(1, "RANDOM_1 (Black)");
+	//Player* p1 = new SmartPlayer(1, "SMART_1 (Black)");
+	Player* p1 = new MonteCarloPlayer(1, "MONTECARLO_1 (Black)");
+
+
+	//Player* p2 = new HumanPlayer(-1, "SMARTPLAYER_2 (White)");
+	//Player* p2 = new RandomPlayer(-1, "RANDOM_2 (White)");
+	//Player* p2 = new SmartPlayer(-1, "SMART_2 (White)");
+	Player* p2 = new MonteCarloPlayer(-1, "MONTECARLO_2 (White)");
+
+
+
 
 	NashGame game(board, p1, p2);
 	game.play();

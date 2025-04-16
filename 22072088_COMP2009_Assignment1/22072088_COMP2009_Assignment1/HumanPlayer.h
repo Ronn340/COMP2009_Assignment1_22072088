@@ -34,6 +34,9 @@ bool HumanPlayer::getMove(Board* board, int& x, int& y) {
 			cout << "Invalid input! Please input again." << endl;
 	}
 
+
+	//cout << "Neighbors at (" << x + 1 << ", " << y + 1 << "): " << endl;
+ 	//board->printStackCells(board->getNeighbors(type, x, y));				//TESTING FOR GETNEIGHBORS()
 	return true;
 }
 
